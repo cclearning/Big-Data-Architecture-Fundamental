@@ -1,0 +1,19 @@
+# prepare data
+cat "Hello World Bye World"  > ../git/file01
+cat "Hello Hadoop Goodbye Hadoop"  > ../git/file02
+
+# make input dir 
+bin/hadoop fs -mkdir -p /usr/cclearn/wordcount/input/
+
+# dump to dfs
+bin/hadoop fs -copyFromLocal ../git/file01 /usr/cclearn/wordcount/input/
+bin/hadoop fs -copyFromLocal ../git/file02 /usr/cclearn/wordcount/input/
+bin/hadoop fs -cat /usr/cclearn/wordcount/input/file01
+
+# run it 
+bin/hadoop fs -rm -f -r /usr/cclearn/wordcount/output
+
+bin/hadoop jar ./wc.jar WordCount /usr/cclearn/wordcount/input /usr/cclearn/wordcount/output
+
+# check result
+bin/hadoop fs -cat /usr/cclearn/wordcount/output/part-r-00000

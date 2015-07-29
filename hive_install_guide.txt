@@ -1,0 +1,21 @@
+wget 'http://mirrors.cnnic.cn/apache/hive/stable/apache-hive-1.2.1-bin.tar.gz'
+
+vi /etc/profile
+export HADOOP_HOME=/home/cclearn/hadoop
+export HIVE_HOME=/home/cclearn/apache-hive-1.2.1-bin
+export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+source /etc/profile
+
+$HADOOP_HOME/bin/hadoop fs -mkdir /tmp
+$HADOOP_HOME/bin/hadoop fs -mkdir -p /user/hive/warehouse
+$HADOOP_HOME/bin/hadoop fs -chmod g+w   /tmp
+$HADOOP_HOME/bin/hadoop fs -chmod g+w   /user/hive/warehouse
+
+wget 'http://files.grouplens.org/datasets/movielens/ml-100k.zip'
+unzip ml-100k.zip
+
+CREATE TABLE u_data ( userid INT, movieid INT, rating INT, unixtime STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' STORED AS TEXTFILE; 
+
+LOAD DATA LOCAL INPATH '../git/ml-100k/u.data' OVERWRITE INTO TABLE u_data;
+
+SELECT COUNT(*) FROM u_data;
