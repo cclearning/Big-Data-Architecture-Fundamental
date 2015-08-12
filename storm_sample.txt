@@ -1,0 +1,29 @@
+## Get storm bin package
+wget 'http://mirrors.cnnic.cn/apache/storm/apache-storm-0.9.5/apache-storm-0.9.5.tar.gz'
+
+## First source code of word count @
+https://github.com/nathanmarz/storm-starter/blob/master/src/jvm/storm/starter/WordCountTopology.java
+
+
+## Install Maven
+
+apt-get install maven
+
+## Build and install Storm jars locally
+
+$ mvn clean install -DskipTests=true
+
+This command will build Storm locally and install its jar files to your user's `$HOME/.m2/repository/`.  When you run
+the Maven command to build and run storm-starter (see below), Maven will then be able to find the corresponding version
+of Storm in this local Maven repository at `$HOME/.m2/repository`.
+
+
+## Running topologies with Maven
+
+> Note: All following examples require that you run `cd examples/storm-starter` beforehand.
+
+storm-starter topologies can be run with the maven-exec-plugin. For example, to
+compile and run `WordCountTopology` in local mode, use the command:
+
+$ mvn compile exec:java -Dstorm.topology=storm.starter.WordCountTopology
+
